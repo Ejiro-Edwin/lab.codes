@@ -2,6 +2,9 @@ import random
 
 import pytest
 
+from django.core.exceptions import ValidationError
+from django.db import IntegrityError
+
 from shorturls.models import ShortURL
 
 
@@ -25,6 +28,20 @@ def test_increment_clicks():
 
     s.increment_clicks()
     assert s.clicks == 1
+
+
+@pytest.mark.django_db
+def test_validate_slug():
+    with pytest.raises(ValidationError):
+        ShortURL.objects.create(original='http://labcodes.com.br', shortened_slug='admin')
+
+
+@pytest.mark.django_db
+def test_validate_duplicate_slug():
+    ShortURL.objects.create(original='http://labcodes.com.br', shortened_slug='test')
+    with pytest.raises(IntegrityError):
+        ShortURL.objects.create(original='http://labcodes.com.br', shortened_slug='test')
+
 
 
 @pytest.mark.django_db
