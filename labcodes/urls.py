@@ -20,5 +20,5 @@ from shorturls import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^(?P<slug>\w+)', views.unshort_url, name='unshort'),
+    url(r'^(?P<slug>\w+)/', views.unshort_url, name='unshort'),
 ]
