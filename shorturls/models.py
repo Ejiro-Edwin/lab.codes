@@ -8,7 +8,7 @@ from django.core.exceptions import ValidationError
 class ShortURL(models.Model):
 
     original = models.URLField(max_length=500)
-    shortened_slug = models.CharField(max_length=6, blank=True, unique=True)
+    shortened_slug = models.CharField(max_length=25, blank=True, unique=True)
 
     clicks = models.IntegerField(default=0)
 
